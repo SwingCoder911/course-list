@@ -1,0 +1,58 @@
+@import '../../shared/styles/variables';
+
+.container {
+  width: 75%;
+  margin: 5em auto;
+
+  @media (min-width: 50em) {
+    width: 40%;
+  }
+
+  &-primary {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-bottom: 2em;
+
+    .search {
+      flex: 2;
+    }
+    .submit {
+      flex: 1;
+      margin-left: 1em;
+    }
+  }
+}
+
+.label {
+  margin: 0.25em 0;
+}
+
+.search {
+  padding: 0.5em 1em;
+  border-radius: $border-radius;
+  border: 1px solid $light-gray;
+  font-size: 1em;
+
+  &.error {
+    border: 1px solid $error-colour;
+  }
+}
+
+.submit {
+  border: 1px solid $primary-colour;
+  background: #fff;
+  color: $primary-colour;
+  border-radius: $border-radius;
+  cursor: pointer;
+}
+
+.error-message {
+  position: absolute;
+  top: calc(100% + 0.25em);
+  left: 0;
+  color: $error-colour;
+  padding: 0;
+  margin: 0;
+  font-size: 0.75em;
+}
