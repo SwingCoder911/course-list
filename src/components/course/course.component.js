@@ -1,7 +1,17 @@
 import React from 'react';
 import styles from './course.module.scss';
+
 const getTitle = ({ department, course }) => `${department} ${course}`;
+
+/**
+ * Component Function: Course
+ * Receive a course and display it. If course is null, just return an empty string
+ * @param {object} course
+ */
 export default function Course({ course }) {
+  if (course === null) {
+    return '';
+  }
   return (
     <article className={styles.container}>
       <header className={styles.header}>{getTitle(course)}</header>

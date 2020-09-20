@@ -2,8 +2,39 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from './app.component';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock('./app.module.scss', () => ({
+  __esModule: true,
+  default: {
+    container: 'container',
+    label: 'label',
+    submit: 'submit',
+    error: 'error',
+    'container-primary': 'container-primary',
+  },
+}));
+
+describe('<App/>', () => {
+  it('should exist', () => {
+    const { container } = render(<App />);
+    expect(container.querySelector('.container')).toBeTruthy();
+    expect(container.querySelector('.container').tagName).toBe('SECTION');
+  });
+
+  it('should have p label', () => {
+    const { getByText } = render(<App />);
+    const p = getByText('Course');
+    expect(p.tagName).toBe('P');
+  });
+
+  it('should have form', () => {
+    const { container } = render(<App />);
+    expect(container.querySelector('.container-primary')).toBeTruthy();
+    expect(container.querySelector('.container-primary').tagName).toBe('FORM');
+  });
+
+  it('should have submit button', () => {
+    const { getByText } = render(<App />);
+    const button = getByText('Submit');
+    expect(button.tagName).toBe('BUTTON');
+  });
 });

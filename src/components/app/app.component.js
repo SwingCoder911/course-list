@@ -1,93 +1,25 @@
 import React, { useState } from 'react';
 import Course from '../course/course.component';
 import className from 'classnames';
+import { getCourseFromString } from '../../utils';
 import styles from './app.module.scss';
-const semesterMatches = {
-  F: 'Fall',
-  f: 'Fall',
-  Fall: 'Fall',
-  fall: 'Fall',
-  W: 'Winter',
-  w: 'Winter',
-  Winter: 'Winter',
-  winter: 'Winter',
-  S: 'Spring',
-  s: 'Spring',
-  Spring: 'Spring',
-  spring: 'Spring',
-  Su: 'Summer',
-  su: 'Summer',
-  Summer: 'Summer',
-  summer: 'Summer',
-};
 
-const getYearFromParsed = (parsed) => {
-  if (parsed.length === 2) {
-    return `20${parsed}`;
-  }
-  return parsed;
-};
-
-const parseDepartmentAndCourse = (input) => {
-  const result = input.match(/^([A-Z]+|[A-Z][a-z]+)[\s:-]?([0-9]+).*/);
-  if (result !== null) {
-    return { department: result[1], course: result[2] };
-  }
-  return { department: null, course: null };
-};
-
-const parseSemesterAndYear = (input) => {
-  const matchSemester = `(${Object.keys(semesterMatches).join('|')})`;
-  const matchYear = `([0-9]{2}|2[0-9]{3})`;
-  let result = input.match(`.*\\s${matchSemester}\\s?${matchYear}$`);
-  if (result !== null) {
-    return {
-      semester: semesterMatches[result[1]],
-      year: getYearFromParsed(result[2]),
-    };
-  }
-  result = input.match(`.*\\s${matchYear}\\s?${matchSemester}$`);
-  if (result !== null) {
-    return {
-      semester: semesterMatches[result[2]],
-      year: getYearFromParsed(result[1]),
-    };
-  }
-  return { semester: null, year: null };
-};
-
-const errorMessage = 'Error: Could not parse course';
-
-const getCourseByString = (input) => {
-  const { department, course } = parseDepartmentAndCourse(input);
-  const { semester, year } = parseSemesterAndYear(input);
-  if (
-    department === null ||
-    course === null ||
-    semester === null ||
-    year === null
-  ) {
-    return null;
-  }
-  return {
-    department,
-    course,
-    semester,
-    year,
-  };
-};
-function App() {
+/**
+ * Component app
+ *
+ */
+export default function App() {
   const [course, setCourse] = useState(null);
   const [search, setSearch] = useState('');
   const [error, setError] = useState(false);
   const onSubmit = (e) => {
     e.preventDefault();
-    const newCourse = getCourseByString(search);
+    const newCourse = getCourseFromString(search);
     if (newCourse !== null) {
       setCourse(newCourse);
       setError(false);
     } else {
-      setError(errorMessage);
+      setError(process.env.REACT_APP_ERROR_MESSAGE);
     }
   };
   const onKeyUp = (e) => {
@@ -117,5 +49,3 @@ function App() {
     </section>
   );
 }
-
-export default App;
