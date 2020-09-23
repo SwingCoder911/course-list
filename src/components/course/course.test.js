@@ -20,5 +20,10 @@ describe('<Course/>', () => {
     const { container } = render(<Course course={courseMock} />);
     expect(container.querySelector('.container')).toBeTruthy();
     expect(container.querySelector('.container').tagName).toBe('ARTICLE');
+    expect(container.querySelector('.header')).toBeTruthy();
+    expect(container.querySelector('.body')).toBeTruthy();
+    expect(container.querySelectorAll('.row').length).toBe(4);
+    expect(container.querySelectorAll('.label').length).toBe(4);
+    expect(container.querySelectorAll('.value').length).toBe(4);
   });
 });

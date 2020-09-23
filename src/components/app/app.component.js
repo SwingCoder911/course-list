@@ -6,7 +6,7 @@ import styles from './app.module.scss';
 
 /**
  * Component app
- *
+ * This is the wrapping component that's meant to handle the layout/general logic flow of the app
  */
 export default function App() {
   const [course, setCourse] = useState(null);
